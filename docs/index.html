@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NFL Prediction Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏈</text></svg>">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- CDN Dependencies -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+<body>
+
+<!-- Global loading overlay -->
+<div id="global-loading" style="position:fixed;inset:0;background:#0d1117;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px">
+  <div style="font-size:2.5rem">🏈</div>
+  <div class="spinner" style="width:32px;height:32px;border-width:3px"></div>
+  <div class="loading-msg" style="color:#8b949e;font-size:0.9rem">Loading NFL Prediction Dashboard…</div>
+</div>
+
+<div id="app">
+
+  <!-- ── Sidebar ─────────────────────────────────────────────────────── -->
+  <aside id="sidebar">
+    <div style="font-size:1rem;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px">
+      🏈 NFL Predictions
+    </div>
+    <div style="font-size:0.72rem;color:#484f58;margin-bottom:16px">Powered by nflverse + ESPN</div>
+
+    <button class="btn btn-blue" onclick="manualRefresh()" style="width:100%;justify-content:center;margin-bottom:12px">
+      ⟳ Refresh Live Data
+    </button>
+    <div id="last-updated" style="font-size:0.72rem;color:#484f58;text-align:center;margin-bottom:16px"></div>
+
+    <div id="sidebar-sliders"></div>
+
+    <hr class="divider">
+    <div style="font-size:0.72rem;color:#484f58;line-height:1.5">
+      Data: <a href="https://github.com/nflverse/nfldata" target="_blank" style="color:#58a6ff">nflverse</a> · ESPN<br>
+      ELO recalculates live on slider change.
+    </div>
+  </aside>
+
+  <!-- ── Main ───────────────────────────────────────────────────────── -->
+  <main id="main">
+    <div id="topbar">
+      <h1>🏈 NFL Prediction Dashboard</h1>
+      <div style="font-size:0.78rem;color:#8b949e">12-system ensemble · Live data · Auto-refresh 30s</div>
+    </div>
+
+    <div id="content">
+
+      <!-- Tab nav -->
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="tab-games">This Week's Games</button>
+        <button class="tab-btn" data-tab="tab-predictor">Matchup Predictor</button>
+        <button class="tab-btn" data-tab="tab-leaderboard">ELO Leaderboard</button>
+        <button class="tab-btn" data-tab="tab-performance">Model Performance</button>
+      </div>
+
+      <!-- Tab panels -->
+      <div id="tab-games"      class="tab-panel active"></div>
+      <div id="tab-predictor"  class="tab-panel"></div>
+      <div id="tab-leaderboard"class="tab-panel"></div>
+      <div id="tab-performance"class="tab-panel"></div>
+
+    </div><!-- /content -->
+  </main>
+
+</div><!-- /app -->
+
+<!-- Scripts (order matters: config → data → elo → predictions → ui → main) -->
+<script src="js/config.js"></script>
+<script src="js/data.js"></script>
+<script src="js/elo.js"></script>
+<script src="js/predictions.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
